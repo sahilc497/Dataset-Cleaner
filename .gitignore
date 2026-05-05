@@ -18,3 +18,10 @@ output/
 # OS Files
 .DS_Store
 Thumbs.db
+
+.env
+*.csv
+!test_data.csv
+output/
+ai_suggestions.json
+explanation.txt

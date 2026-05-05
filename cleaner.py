@@ -3,8 +3,9 @@ import numpy as np
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 
 class DataCleaner:
-    def __init__(self, df):
+    def __init__(self, df, target_column=None):
         self.df = df.copy()
+        self.target = target_column
         self.original_shape = df.shape
         self.report = {
             "Original Rows": self.original_shape[0],
@@ -17,14 +18,19 @@ class DataCleaner:
         """
         missing_count = self.df.isnull().sum().sum()
         
-        # Numerical columns
+        # Determine columns to process (exclude target)
         num_cols = self.df.select_dtypes(include=[np.number]).columns
+        if self.target in num_cols:
+            num_cols = num_cols.drop(self.target)
+            
         for col in num_cols:
             if self.df[col].isnull().any():
                 self.df[col] = self.df[col].fillna(self.df[col].median())
         
-        # Categorical columns
         cat_cols = self.df.select_dtypes(include=['object']).columns
+        if self.target in cat_cols:
+            cat_cols = cat_cols.drop(self.target)
+            
         for col in cat_cols:
             if self.df[col].isnull().any():
                 self.df[col] = self.df[col].fillna(self.df[col].mode()[0])
@@ -46,6 +52,9 @@ class DataCleaner:
         Detect and remove outliers using the IQR method.
         """
         num_cols = self.df.select_dtypes(include=[np.number]).columns
+        if self.target in num_cols:
+            num_cols = num_cols.drop(self.target)
+            
         total_outliers = 0
         
         for col in num_cols:
@@ -67,6 +76,9 @@ class DataCleaner:
         Encode categorical variables using Label Encoding.
         """
         cat_cols = self.df.select_dtypes(include=['object']).columns
+        if self.target in cat_cols:
+            cat_cols = cat_cols.drop(self.target)
+            
         le = LabelEncoder()
         for col in cat_cols:
             self.df[col] = le.fit_transform(self.df[col].astype(str))
@@ -79,6 +91,9 @@ class DataCleaner:
         Normalize numerical features using StandardScaler.
         """
         num_cols = self.df.select_dtypes(include=[np.number]).columns
+        if self.target in num_cols:
+            num_cols = num_cols.drop(self.target)
+            
         if not num_cols.empty:
             scaler = StandardScaler()
             self.df[num_cols] = scaler.fit_transform(self.df[num_cols])
@@ -98,7 +113,7 @@ class FeatureAnalyzer:
         self.task_type = task_type
         self.importance_report = {}
 
-    def analyze_importance(self):
+    def analyze(self):
         """
         Calculates feature importance using Random Forest.
         """

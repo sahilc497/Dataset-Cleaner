@@ -15,7 +15,7 @@ def setup_logging():
             logging.StreamHandler(sys.stdout)
         ]
     )
-    return logging.getLogger("DatasetCleaner")
+    return logging.getLogger("CleanSightAI")
 
 def load_data(file_path):
     """
