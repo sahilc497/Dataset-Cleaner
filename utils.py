@@ -45,13 +45,26 @@ def save_data(df, file_path="output/clean_data.csv"):
     except Exception as e:
         raise Exception(f"Error saving CSV: {e}")
 
-def print_summary(report):
+def print_summary(report, importance_report=None):
     """
-    Prints a formatted summary of the cleaning operations.
+    Prints a formatted summary of the cleaning operations and feature importance.
     """
     print("\n" + "="*40)
     print("       DATA CLEANING SUMMARY")
     print("="*40)
     for key, value in report.items():
         print(f"{key:25}: {value}")
+    
+    if importance_report:
+        print("\n" + "="*40)
+        print("       FEATURE IMPORTANCE")
+        print("="*40)
+        print("Top 3 Features:")
+        for feat, score in importance_report["Top Features"]:
+            print(f" - {feat:20}: {score:.4f}")
+        
+        print("\nLeast 3 Features:")
+        for feat, score in importance_report["Least Features"]:
+            print(f" - {feat:20}: {score:.4f}")
+            
     print("="*40 + "\n")

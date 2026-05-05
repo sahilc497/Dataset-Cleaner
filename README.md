@@ -15,6 +15,7 @@ A powerful, CLI-based automation tool designed to streamline the data preprocess
   - Categorical data: Fills missing values with the **Mode**.
 - **🧹 Data Deduplication**: Removes redundant rows to ensure data integrity.
 - **📉 Outlier Management**: Detects and removes outliers using the **Interquartile Range (IQR)** method.
+- **📊 Feature Importance**: Analyzes which features contribute most to a specified target variable using Random Forest.
 - **🏷️ Categorical Encoding**: Automatically converts text labels into numerical format using **Label Encoding**.
 - **⚖️ Feature Scaling**: Standardizes numerical features using **StandardScaler** for better ML performance.
 - **📁 Organized Output**: Automatically creates an `output/` directory for cleaned datasets.
@@ -72,6 +73,14 @@ You can specify a custom output path using the `-o` or `--output` flag:
 
 ```bash
 python main.py raw_data.csv -o output/final_cleaned_data.csv
+```
+
+---
+
+## 📊 Feature Importance Analysis
+Identify which features contribute most to your target variable:
+```bash
+python main.py data.csv --target salary --task regression
 ```
 
 ---

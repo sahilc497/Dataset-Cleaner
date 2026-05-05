@@ -90,3 +90,43 @@ class DataCleaner:
         self.report["Final Rows"] = len(self.df)
         self.report["Final Columns"] = len(self.df.columns)
         return self.df, self.report
+
+class FeatureAnalyzer:
+    def __init__(self, df, target_column, task_type='classification'):
+        self.df = df.copy()
+        self.target = target_column
+        self.task_type = task_type
+        self.importance_report = {}
+
+    def analyze_importance(self):
+        """
+        Calculates feature importance using Random Forest.
+        """
+        if self.target not in self.df.columns:
+            raise ValueError(f"Target column '{self.target}' not found in dataset.")
+
+        X = self.df.drop(columns=[self.target])
+        y = self.df[self.target]
+
+        from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+        
+        if self.task_type == 'regression':
+            model = RandomForestRegressor(n_estimators=100, random_state=42)
+        else:
+            # For classification, ensure target is integer
+            if y.dtype == 'object':
+                from sklearn.preprocessing import LabelEncoder
+                y = LabelEncoder().fit_transform(y)
+            model = RandomForestClassifier(n_estimators=100, random_state=42)
+
+        model.fit(X, y)
+        importances = model.feature_importances_
+        feature_names = X.columns
+        
+        feature_importance = sorted(zip(feature_names, importances), key=lambda x: x[1], reverse=True)
+        
+        self.importance_report = {
+            "Top Features": feature_importance[:3],
+            "Least Features": feature_importance[-3:]
+        }
+        return self.importance_report
