@@ -10,7 +10,7 @@ A powerful, CLI-based automation tool designed to streamline the data preprocess
 
 ## 🤖 AI-Powered Features (Mistral)
 
-The Dataset Auto Cleaner now leverages the **Mistral AI** engine to provide intelligent suggestions and explanations for your data cleaning process.
+CleanSight AI now leverages the **Mistral AI** engine to provide intelligent suggestions and explanations for your data cleaning process.
 
 ### 🔑 Setup AI
 1. Get a Mistral API Key from [console.mistral.ai](https://console.mistral.ai/).
@@ -92,8 +92,10 @@ Don't have a dataset? Use our built-in synthetic data generators to see the tool
 
 ```text
 ├── output/                  # Cleaned datasets are saved here
+├── app.py                   # Streamlit Web Dashboard
 ├── main.py                  # CLI entry point & workflow orchestration
-├── cleaner.py               # Core data cleaning engine
+├── cleaner.py               # Core data cleaning & analysis engine
+├── ai_engine.py             # Mistral AI integration logic
 ├── utils.py                 # I/O utilities and logging setup
 ├── requirements.txt         # Project dependencies
 ├── generate_sample.py       # (Demo) Script for regression data
@@ -107,8 +109,8 @@ Don't have a dataset? Use our built-in synthetic data generators to see the tool
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/sahilc497/Dataset-Cleaner.git
-cd Dataset-Cleaner
+git clone https://github.com/sahilc497/CleanSight-AI.git
+cd CleanSight-AI
 ```
 
 ### 2. Setup Environment
