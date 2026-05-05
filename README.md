@@ -1,183 +1,110 @@
-# 🔍 CleanSight AI
+# 🔍 CleanSight AI: Intelligent Dataset Preprocessing
 
 ![Python](https://img.shields.io/badge/Python-3.8+-blue?style=for-the-badge&logo=python)
 ![Pandas](https://img.shields.io/badge/Pandas-Latest-red?style=for-the-badge&logo=pandas)
-![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-Latest-orange?style=for-the-badge&logo=scikitlearn)
+![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?style=for-the-badge&logo=streamlit)
+![Mistral AI](https://img.shields.io/badge/Mistral%20AI-Powered-orange?style=for-the-badge&logo=mistralai)
 
-A powerful, CLI-based automation tool designed to streamline the data preprocessing phase for Machine Learning projects. Now supercharged with **Mistral AI**.
+**CleanSight AI** is a state-of-the-art data preprocessing and analysis tool that transforms messy raw datasets into ML-ready assets. By combining rule-based cleaning with **Mistral LLM** reasoning, it doesn't just clean your data—it understands it.
 
 ---
 
-## 🤖 AI-Powered Features (Mistral)
+## 🤖 AI-Powered Intelligence (Mistral)
 
-CleanSight AI now leverages the **Mistral AI** engine to provide intelligent suggestions and explanations for your data cleaning process.
+CleanSight AI integrates the Mistral LLM to act as your personal Data Science assistant.
 
-### 🔑 Setup AI
-1. Get a Mistral API Key from [console.mistral.ai](https://console.mistral.ai/).
-2. Create a `.env` file in the root directory:
-   ```text
-   MISTRAL_API_KEY=your_api_key_here
-   ```
+- **✨ Smart Preprocessing (`--ai`)**: Analyze your data structure and receive a custom strategy for encoding, scaling, and model selection.
+- **📖 Human-Readable Reports (`--explain`)**: Automatically translates technical transformations (like IQR outlier removal) into plain-English explanations.
+- **⚖️ Imbalance Detection**: Automatically identifies class distribution issues and suggests SMOTE or weighting strategies.
 
-### 🤖 AI Commands
-- **`--ai`**: Fetches smart preprocessing suggestions (columns to drop, scaling strategies, model recommendations).
-- **`--explain`**: Generates a plain-English explanation of all cleaning steps performed.
+---
 
-**Example Usage:**
-```bash
-python main.py data.csv --target status --task classification --ai --explain
-```
+## 🖥️ Streamlit Dashboard (Visual Mode)
 
-## 🚀 Features
+Prefer a GUI over the terminal? Launch the **CleanSight Dashboard** for an interactive experience.
 
-- **Automated Cleaning**:
-  - Handles missing values (Median for Numerical, Mode for Categorical).
-  - Removes duplicate rows.
-  - Detects and removes outliers using the **IQR (Interquartile Range)** method.
-- **Preprocessing**:
-  - **Label Encoding**: Automatically encodes categorical text data.
-  - **Standardization**: Normalizes numerical features (scales to mean=0, std=1).
-  - **Target Protection**: Ensures the target column is never scaled or modified.
-- **Smart Analysis**:
-  - **Feature Importance**: Uses Random Forest to identify the most and least significant features.
-  - **Dual Task Support**: Works for both **Regression** (numerical target) and **Classification** (categorical target).
+### Key Features:
+- **Side-by-Side Comparison**: View raw and cleaned dataframes simultaneously.
+- **Live Metrics**: Track exactly how many rows were dropped, missing values filled, and outliers removed.
+- **Importance Visualization**: Interactive bar charts showing feature significance for your ML task.
+- **Strategy Sidebar**: Toggle AI features and view Mistral's logic in a structured layout.
 
-## 🛠️ Usage
-
-### 🖥️ Streamlit UI (New!)
-Prefer a visual interface? Run our dashboard:
+**Launch Command:**
 ```bash
 streamlit run app.py
 ```
 
-### 💻 CLI Usage
+---
+
+## 💻 CLI Usage (Power User Mode)
+
+For automation and speed, use the robust CLI engine.
+
+### Quick Start
 ```bash
-# Basic Cleaning
+# Basic auto-clean
 python main.py data.csv
 
-# Full AI Analysis
+# AI-assisted cleaning with importance analysis
 python main.py data.csv --target price --task regression --ai --explain
 ```
 
-### CLI Arguments
-- `input`: Path to your CSV file.
-- `--output_dir`: Custom folder for results (default: `output/`).
-- `--target`: The name of your target/label column.
-- `--task`: `classification` or `regression`.
+### Command Reference
+| Argument | Description | Pro Tip |
+| :--- | :--- | :--- |
+| `input` | Path to CSV file | Supports relative and absolute paths. |
+| `--target` | Your label/target column | Enabling this activates Feature Importance analysis. |
+| `--task` | `classification` / `regression` | Helps AI and Random Forest choose the right logic. |
+| `--ai` | Enable Mistral suggestions | Requires a `.env` file with `MISTRAL_API_KEY`. |
+| `--explain` | Generate plain English report | Saves a detailed summary to `output/explanation.txt`. |
+| `-o` | Output directory | Default is `output/`. |
 
 ---
 
-## 🧪 Try it Now (Demo)
+## ⚙️ The Cleaning Engine
 
-Don't have a dataset? Use our built-in synthetic data generators to see the tool in action:
+CleanSight AI follows a rigorous multi-stage pipeline:
 
-1.  **Generate Synthetic Data**:
-    ```bash
-    python generate_sample.py          # Creates synthetic_data.csv (Regression)
-    python generate_classification.py  # Creates classification_data.csv (Classification)
-    ```
-
-2.  **Run Analysis**:
-    ```bash
-    # Test Regression
-    python main.py synthetic_data.csv --target target --task regression
-
-    # Test Classification
-    python main.py classification_data.csv --target status --task classification
-    ```
+1.  **Imputation**: Fills missing numerical data with the **Median** and categorical data with the **Mode**.
+2.  **Deduplication**: Identifies and purges identical rows to prevent model bias.
+3.  **Outlier Filtering**: Uses the **Interquartile Range (IQR)** method to safely remove anomalies.
+4.  **Encoding**: Automatically converts categorical labels into numerical format using **Label Encoding**.
+5.  **Scaling**: Standardizes numerical features using **StandardScaler** (protecting the target column).
+6.  **Analysis**: Ranks features using **Random Forest** ensembles to pinpoint what actually drives your target.
 
 ---
 
-## 🛠️ Project Structure
+## 🚀 Installation & Setup
 
-```text
-├── output/                  # Cleaned datasets are saved here
-├── app.py                   # Streamlit Web Dashboard
-├── main.py                  # CLI entry point & workflow orchestration
-├── cleaner.py               # Core data cleaning & analysis engine
-├── ai_engine.py             # Mistral AI integration logic
-├── utils.py                 # I/O utilities and logging setup
-├── requirements.txt         # Project dependencies
-├── generate_sample.py       # (Demo) Script for regression data
-├── generate_classification.py # (Demo) Script for classification data
-└── README.md                # Professional documentation
-```
-
----
-
-## 🚀 Quick Start
-
-### 1. Clone the Repository
+### 1. Clone & Enter
 ```bash
 git clone https://github.com/sahilc497/CleanSight-AI.git
 cd CleanSight-AI
 ```
 
-### 2. Setup Environment
-
-**Windows (PowerShell):**
-```powershell
-.\setup_venv.ps1
-```
-
-**Mac / Linux:**
+### 2. Environment Setup
+**Windows:** `.\setup_venv.ps1`  
+**Mac/Linux:**
 ```bash
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Run the Cleaner
-Provide the path to your raw CSV file:
-```bash
-python main.py data.csv
-```
-
----
-
-## ⚙️ Advanced Usage
-
-You can specify a custom output path using the `-o` or `--output` flag:
-
-```bash
-python main.py raw_data.csv -o output/final_cleaned_data.csv
-```
-
----
-
-## 📊 Feature Importance Analysis
-Identify which features contribute most to your target variable:
-```bash
-python main.py data.csv --target salary --task regression
-```
-
----
-
-## 📊 Summary Report
-After every run, the tool generates a console summary:
+### 3. Configure AI (Optional)
+Create a `.env` file and add your key:
 ```text
-========================================
-       DATA CLEANING SUMMARY
-========================================
-Original Rows            : 1000
-Original Columns         : 12
-Missing Values Filled    : 45
-Duplicates Removed       : 5
-Outliers Removed         : 12
-Categorical Columns Encoded: 3
-Numerical Columns Normalized: 9
-Final Rows               : 983
-Final Columns            : 12
-========================================
+MISTRAL_API_KEY=your_key_here
 ```
 
 ---
 
-## 🤝 Contributing
-Contributions are welcome! Feel free to open an issue or submit a pull request.
-
-## 📄 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+## 🧪 Try the Demo
+CleanSight AI comes with built-in data generators for testing:
+```bash
+python generate_sample.py          # Regression Demo
+python generate_classification.py  # Classification Demo
+```
 
 ---
+
 Created with ❤️ by [Sahil](https://github.com/sahilc497)
