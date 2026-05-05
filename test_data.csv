@@ -1,0 +1,12 @@
+name,age,salary,city
+Alice,25,50000,New York
+Bob,30,60000,London
+Charlie,35,,Paris
+David,40,80000,
+Eve,25,50000,New York
+Frank,120,200000,Berlin
+Grace,28,55000,London
+Heidi,32,62000,Paris
+Ivan,,70000,New York
+Judy,45,90000,Berlin
+Alice,25,50000,New York
